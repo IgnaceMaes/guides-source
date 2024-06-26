@@ -36,38 +36,38 @@ Every input should be associated with a label. In HTML, there are a few ways to 
 1. You can nest the input inside the label.
 
    ```handlebars
-   <label>
-     Ask a question about Ember:
+<label>
+  Ask a question about Ember:
 
-     <Input
-       @type="text"
-       @value={{this.userQuestion}}
-     />
-   </label>
+  <Input
+    @type="text"
+    @value={{this.userQuestion}}
+  />
+</label>
    ```
 
 2. You can create an ID (globally unique within the webpage), then associate the label to the input with `for` attribute and `id` attribute.
 
    ```handlebars
-   <label for={{this.myUniqueId}}>
-     Ask a question about Ember:
-   </label>
+<label for={{this.myUniqueId}}>
+  Ask a question about Ember:
+</label>
 
-   <Input
-     id={{this.myUniqueId}}
-     @type="text"
-     @value={{this.userQuestion}}
-   />
+<Input
+  id={{this.myUniqueId}}
+  @type="text"
+  @value={{this.userQuestion}}
+/>
    ```
 
 3. You can use the `aria-label` attribute to label the input with a string that is visually hidden but still available to assistive technology. 
 
    ```handlebars
-   <Input
-     aria-label="Ask a question about Ember"
-     @type="text"
-     @value={{this.userQuestion}}
-   />
+<Input
+  aria-label="Ask a question about Ember"
+  @type="text"
+  @value={{this.userQuestion}}
+/>
    ```
 
 While it is more appropriate to use the `<label>` element, the `aria-label` attribute can be used in instances where visible text content is not possible.

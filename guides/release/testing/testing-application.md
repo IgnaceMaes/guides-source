@@ -110,19 +110,19 @@ deal with asynchronous behavior as follows:
 Mark the callback passed to the `test` function as asynchronous using the `async` keyword:
 
 ```javascript {data-filename=tests/acceptance/new-post-appears-first-test.js}
-  test('should add new post', async function(assert) {
+test('should add new post', async function(assert) {
 
-  });
+});
 ```
 Before making an assertion, wait for the execution of each asynchronous helper to finish with the `await` keyword:
 
 ```javascript {data-filename=tests/acceptance/new-post-appears-first-test.js}
-  test('should add new post', async function(assert) {
-    await visit('/posts/new');
-    await fillIn('[data-test-field="Title"]', 'My new post');
-    await click('[data-test-button="Save"]');
-    assert.dom('[data-test-post-title]').hasText('My new post');
-  });
+test('should add new post', async function(assert) {
+  await visit('/posts/new');
+  await fillIn('[data-test-field="Title"]', 'My new post');
+  await click('[data-test-button="Save"]');
+  assert.dom('[data-test-post-title]').hasText('My new post');
+});
 ```
 
 Once we `await` the execution of the asynchronous helpers this way, we will ensure that all subsequent assertions are always made **after** the

@@ -442,28 +442,28 @@ to render a modal, tooltip, or dropdown.
 
 Suppose we want to show a dropdown menu when the user clicks on a button. The code below shows a `<button>` element, a placeholder `<div>` element, and a dropdown component. The argument `@show`, when set to `true`, will add the dropdown to the placeholder div.
 ```handlebars {data-filename=app/components/some-component.hbs}
-  <button
-    type="button"
-    {{on "click" this.onClickShowDropdown}}
-  >
-    More Actions
-  </button>
-  <div id="dropdown-destination" />
+<button
+  type="button"
+  {{on "click" this.onClickShowDropdown}}
+>
+  More Actions
+</button>
+<div id="dropdown-destination" />
 
-  <MyDropdownComponent
-    @show={{this.showDropdown}}
-  />
+<MyDropdownComponent
+  @show={{this.showDropdown}}
+/>
 ```
 
 When the user clicks on the button, the flag `showDropdown` will be set to `true`.
 ```js {data-filename=app/components/some-component.js}
-  @tracked
-  showDropdown = false;
+@tracked
+showDropdown = false;
 
-  @action
-  onClickShowDropdown() {
-    this.showDropdown = true;
-  }
+@action
+onClickShowDropdown() {
+  this.showDropdown = true;
+}
 ```
 
 The dropdown component uses the argument `@show` to activate the `in-element` helper. We must **provide the destination DOM element** to the helper. In other words, where should the helper render its block content?
@@ -480,20 +480,20 @@ The dropdown component uses the argument `@show` to activate the `in-element` he
 ```
 
 ```js {data-filename=app/components/my-dropdown-component.js}
-  get destinationElement() {
-    return document.querySelector('#dropdown-destination');
-  }
+get destinationElement() {
+  return document.querySelector('#dropdown-destination');
+}
 ```
 
 After the user clicks on the button, the final HTML result for the div will be like this:
 ```html
-  <div id="dropdown-destination">
-    <ul>
-      <li>Archive</li>
-      <li>Mark as Read</li>
-      <li>Report</li>
-    </ul>
-  </div>
+<div id="dropdown-destination">
+  <ul>
+    <li>Archive</li>
+    <li>Mark as Read</li>
+    <li>Report</li>
+  </ul>
+</div>
 ```
 
 Things to note:

@@ -32,16 +32,16 @@ export default class TodoComponent extends Component {
   component/controller).
 * Adding arguments to action callbacks:
 
-  ```handlebars
+      ```handlebars
     <!-- passes 123 to the 'setValue' action -->
     <MyComponent @onClick={{action 'setValue' 123}} />
-  ```
+      ```
 
 * Adding event handlers to elements (when used as a modifier):
 
-  ```handlebars
+      ```handlebars
     <button type="button" {{action 'sayHello'}}>Say Hello!</button>
-  ```
+      ```
 
 The new APIs split each of these pieces of functionality out into one clearly
 defined API:

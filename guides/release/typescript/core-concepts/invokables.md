@@ -356,28 +356,28 @@ For example, you might define a `parseInt` helper like this using a normal funct
 - In TypeScript:
 
       ```typescript {data-filename="app/helpers/parse-int.ts"}
-      /**
-       * @param value - the value to parse
-       * @param options - how to parse the value
-       */
-      function parseInt(value: string, options: { radix?: number }): number {
-        let radix = options?.radix ?? 10;
-        return Number.parseInt(value, radix);
-      }
+    /**
+     * @param value - the value to parse
+      * @param options - how to parse the value
+      */
+    function parseInt(value: string, options: { radix?: number }): number {
+      let radix = options?.radix ?? 10;
+      return Number.parseInt(value, radix);
+    }
       ```
 
 - With JSDoc:
 
       ```js {data-filename="app/helpers/parse-int.js"}
-      /**
-       * @param {string} value - the value to parse
-       * @param {{ radix?: number }} named - how to parse the value
-       * @returns {number}
-       */
-      export default function parseInt(value, named) {
-        let radix = named?.radix ?? 10;
-        return Number.parseInt(value, radix);
-      }
+    /**
+     * @param {string} value - the value to parse
+      * @param {{ radix?: number }} named - how to parse the value
+      * @returns {number}
+      */
+    export default function parseInt(value, named) {
+      let radix = named?.radix ?? 10;
+      return Number.parseInt(value, radix);
+    }
       ```
 
 Using `helper()`, you would define it very similarly:
@@ -385,35 +385,35 @@ Using `helper()`, you would define it very similarly:
 - In TypeScript:
 
       ```typescript {data-filename="app/helpers/parse-int.ts"}
-      import { helper } from '@ember/component/helper';
+    import { helper } from '@ember/component/helper';
 
-      export default helper(function parseInt(
-        positional: [string],
-        named: { radix?: number }
-      ): number {
-        let value = positional[0];
-        let radix = named.radix ?? 10;
-        return Number.parseInt(value, radix);
-      });
+    export default helper(function parseInt(
+      positional: [string],
+      named: { radix?: number }
+    ): number {
+      let value = positional[0];
+      let radix = named.radix ?? 10;
+      return Number.parseInt(value, radix);
+    });
       ```
 
 - With JSDoc:
 
       ```typescript {data-filename="app/helpers/parse-int.js"}
-      import { helper } from '@ember/component/helper';
+    import { helper } from '@ember/component/helper';
 
-      export default helper(
-        /**
-         * @param {string} value - the value to parse
-         * @param {{ radix?: number }} named - how to parse the value
-         * @returns {number}
-         */
-        function parseInt(positional, named): number {
-          let value = positional[0];
-          let radix = named.radix ?? 10;
-          return Number.parseInt(value, radix);
-        }
-      );
+    export default helper(
+      /**
+       * @param {string} value - the value to parse
+        * @param {{ radix?: number }} named - how to parse the value
+        * @returns {number}
+        */
+      function parseInt(positional, named): number {
+        let value = positional[0];
+        let radix = named.radix ?? 10;
+        return Number.parseInt(value, radix);
+      }
+    );
       ```
 
 For completeness and backwards-compatibility, helpers defined with `helper()` do accept signatures as a type parameter as well. The `parseInt` helper might look like this if using an explicit signature:
@@ -506,9 +506,9 @@ From a type checking perspective, these types must be _compatible_ with the type
 For example, we could define the type of the positional arguments in the method body as `Array<unknown>` instead of `[string]`, while keeping the original signature's `Positional: [string]`:
 
 ```typescript
-  compute(positional: Array<unknown>, named: { locale?: string }): string {
-    // ...
-  }
+compute(positional: Array<unknown>, named: { locale?: string }): string {
+  // ...
+}
 ```
 
 Because the signature set on the class, callers would still have to pass a single string argument, but we would need to change the behavior of the body to [narrow the type][narrowing] for the first item in the array.
@@ -544,40 +544,40 @@ Using our `play-when` modifier example used with the `AudioPlayer` above, we mig
 - In TypeScript:
 
       ```typescript {data-filename="app/modifiers/play-when.ts"}
-      import { modifier } from 'ember-modifier';
+    import { modifier } from 'ember-modifier';
 
-      export default modifier(function playWhen(
-        element: HTMLAudioElement,
-        positional: [shouldPlay: boolean]
-      ): void {
+    export default modifier(function playWhen(
+      element: HTMLAudioElement,
+      positional: [shouldPlay: boolean]
+    ): void {
+      let [shouldPlay] = positional;
+      if (shouldPlay) {
+        element.play();
+      } else {
+        element.pause();
+      }
+    });
+      ```
+
+- With JSDoc:
+
+      ```js {data-filename="app/modifiers/play-when.js"}
+    import { modifier } from 'ember-modifier';
+
+    export default modifier(
+      /**
+       * @param {HTMLAudioElement} element
+        * @param {[shouldPlay: boolean]} positional
+        */
+      (element, positional): void => {
         let [shouldPlay] = positional;
         if (shouldPlay) {
           element.play();
         } else {
           element.pause();
         }
-      });
-      ```
-
-- With JSDoc:
-
-      ```js {data-filename="app/modifiers/play-when.js"}
-      import { modifier } from 'ember-modifier';
-
-      export default modifier(
-        /**
-         * @param {HTMLAudioElement} element
-         * @param {[shouldPlay: boolean]} positional
-         */
-        (element, positional): void => {
-          let [shouldPlay] = positional;
-          if (shouldPlay) {
-            element.play();
-          } else {
-            element.pause();
-          }
-        }
-      );
+      }
+    );
       ```
 
 For the sake of backward compatibility and completeness, using a signature explicitly as a type parameter to `modifier()` is also supported. In that case, we could write the modifier like this:
